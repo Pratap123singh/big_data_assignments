@@ -1,0 +1,107 @@
+/home/cloudera/hdp/igandhive/labs/demos
+
+
+hdfs dfs -ls
+hdfs dfs -ls /
+
+hdfs dfs -mkdir test
+hdfs dfs -ls
+
+create directory
+hdfs dfs -mkdir test
+hdfs dfs -mkdir test/test1 (to run this first create test. You can not directly create test/test1)
+hdfs dfs -mkdir -p test/test2/test3
+hdfs dfs -mkdor -p car/tata/suv ->(-p => you can directly create hierarchy of directories dfs )
+hdfs dfs -ls
+hdfs dfs -ls -R
+
+Delete directory
+hdfs dfs -rm -R test/test1
+hdfs dfs -rm -R test
+
+dat Copy a File in HDFS
+hdfs dfs -cp <source_path/file_name> <destination_path/name_to_be_given_to_file>
+
+hdfs dfs -cp ./data.txt ./test/data1.txt
+hdfs dfs -cp /home/cloudera/hdp/pigandhive/labs/demos/data.txt
+/home/cloudera/hdp/pigandhive/labs/demos/test/data1.txt
+
+View the Contents of a File in HDFS
+hdfs dfs -cat test/data.txt
+hdfs dfs -tail test/data.txt
+
+Upload a File to HDFS
+hdfs dfs -put data.txt test/
+
+hdfs dfs -put <from_where_path>/filename ./<dir_name_in_hdfs>
+
+hdfs dfs -put /home/cloudera/shared/data.txt ./monkey 
+
+Getting a File from HDFS
+hdfs dfs -get test/data.txt /tmp/
+
+
+The getmerge Command
+hdfs dfs -getmerge test /tmp/merged.txt
+----> all the files in the test folder get merged into one file.
+----> the name given to new merged file is merged.txt
+----> the merged.txt file is saved at the location /tmp
+
+hdfs dfs -getmerge test ./merged1.txt ---> will store the file at demos
+
+The two files that were in the test folder in HDFS were merged into a single file and stored on the local file system.
+
+Specify the Block Size and Replication Factor
+
+ls -lh (local m/c file)
+merged1.txt merged2.txt
+
+hdfs dfs -D dfs.blocksize=1048576 -put merged1.txt 
+hdfs dfs -ls
+
+View the Number of Blocks
+hdfs fsck <path_file>
+
+Find the Actual Blocks
+hdfs fsck <path_file> -files -blocks
+
+Find the Actual Blocks
+hdfs fsck /user/root/stocks.csv -files -blocks -locations
+
+
+Block creation
+hdfs dfs -D dfs.blocksize=1048576 -put merged1.txt mer_block_22.txt
+
+hdfs dfs -D dfs.blocksize=1048576 -put carMerge.txt m1.txt
+
+merged1.txt ---> file is present on local m/c at demos
+
+hdfs fsck /user/cloudera/stocks.csv -files -blocks -locations
+
+hdfs fsck /user/cloudera/m1.txt
+hdfs fsck /user/cloudera/m1.txt -files -blocks -locations 
+
+find
+find / -type f -name data.txt  ----> file
+find / -type d -name test ----> directory
+
+
+
+path of files in hdfs is
+/user/cloudera/data.txt
+/user/cloudera/stocks.csv
+
+
+
+hdfs dfs -test -d $yourdir
+
+
+if [ $? == 0 ]; then
+    echo "exists"
+else
+    echo "dir does not exists"
+fi
+
+hdfs dfs -D dfs.blocksize=1048576 -put carMerge.txt m1.txt
+hdfs fsck /user/cloudera/m1.txt
+hdfs fsck /user/cloudera/m1.txt -files -blocks -locations 
